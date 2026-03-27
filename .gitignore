@@ -1,0 +1,52 @@
+# dependencies
+node_modules/
+
+# build outputs
+dist/
+build/
+coverage/
+.cache/
+
+# runtime data and logs
+*.log
+logs/
+apps/server/data/logs/
+apps/server/data/sessions/
+apps/server/data/cookies/
+
+# env and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.kdbx
+
+# local databases and dumps
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+
+# playwright and browser artifacts
+playwright-report/
+test-results/
+.playwright/
+browser-data/
+user-data/
+storage-state*.json
+cookies*.json
+
+# editor/system files
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.idea/
+.vscode/
+
+# optional local docs
+# 开发流程.md
