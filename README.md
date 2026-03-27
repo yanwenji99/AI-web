@@ -45,6 +45,13 @@ npm run dev
 
 默认启动地址：`http://127.0.0.1:3000`
 
+### 3. 代码质量检查
+
+```bash
+npm run typecheck
+npm run lint
+```
+
 ## 已有路由
 
 1. `POST /chat`

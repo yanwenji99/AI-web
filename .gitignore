@@ -6,9 +6,14 @@ dist/
 build/
 coverage/
 .cache/
+*.tsbuildinfo
 
 # runtime data and logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 logs/
 apps/server/data/logs/
 apps/server/data/sessions/
@@ -47,6 +52,8 @@ Thumbs.db
 *.swp
 .idea/
 .vscode/
+.eslintcache
 
-# optional local docs
-# 开发流程.md
+# optional local files
+*.local
+开发流程.md
