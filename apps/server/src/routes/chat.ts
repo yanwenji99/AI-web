@@ -26,6 +26,42 @@ type ValidatedChatBody = {
   messages: ChatRequest["messages"];
 };
 
+/**
+ * POST /chat contract
+ *
+ * Request body fields:
+ * - provider?: string, optional provider id. Defaults to "provider-a".
+ * - model: string, required model id.
+ * - timeoutMs?: number, optional timeout in milliseconds.
+ * - messages: Array<{ role, content }>, at least one item.
+ *
+ * Unified response shape for both success and failure:
+ * - provider: string
+ * - model: string
+ * - text: string
+ * - error_code: ErrorCode | null
+ *
+ * Example success response:
+ * {
+ *   "provider": "provider-a",
+ *   "model": "default",
+ *   "text": "provider-a echo: hello",
+ *   "error_code": null
+ * }
+ *
+ * Example failure response:
+ * {
+ *   "provider": "provider-x",
+ *   "model": "default",
+ *   "text": "Unsupported provider: provider-x",
+ *   "error_code": "UNKNOWN"
+ * }
+ *
+ * Retry policy by error_code:
+ * - Retryable: TIMEOUT, RATE_LIMITED, PAGE_CHANGED
+ * - Non-retryable: NOT_LOGGED_IN, UNKNOWN
+ */
+
 const buildErrorResponse = (
   provider: string,
   model: string,

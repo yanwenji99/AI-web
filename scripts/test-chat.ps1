@@ -8,6 +8,12 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# Force UTF-8 in current session to avoid mojibake on GBK code pages.
+chcp 65001 | Out-Null
+[Console]::InputEncoding = [System.Text.UTF8Encoding]::new($false)
+[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
+$OutputEncoding = [Console]::OutputEncoding
+
 $payload = @{
   provider = $Provider
   model = $Model
@@ -23,7 +29,7 @@ $payload = @{
 Write-Host "POST $Url"
 Write-Host "Message: $Message"
 
-$response = Invoke-RestMethod -Method Post -Uri $Url -ContentType "application/json" -Body $payload
+$response = Invoke-RestMethod -Method Post -Uri $Url -ContentType "application/json; charset=utf-8" -Body $payload
 
 Write-Host "Response:"
 $response | ConvertTo-Json -Depth 10

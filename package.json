@@ -12,7 +12,8 @@
     "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "chat:ping": "powershell -ExecutionPolicy Bypass -File scripts/test-chat.ps1",
-    "chat:client": "tsx apps/server/src/clients/echo-client.ts"
+    "chat:client": "tsx apps/server/src/clients/echo-client.ts",
+    "verify:provider-a:web": "powershell -ExecutionPolicy Bypass -File scripts/verify-provider-a-web.ps1 -Count 10"
   },
   "dependencies": {
     "fastify": "^5.0.0",

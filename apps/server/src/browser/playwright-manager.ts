@@ -1,18 +1,30 @@
 import { chromium, type Browser } from "playwright";
 
-let browserRef: Browser | null = null;
+type BrowserMode = "headless" | "headed";
 
-export const getBrowser = async (): Promise<Browser> => {
-  if (!browserRef) {
-    browserRef = await chromium.launch({ headless: true });
+const browserRefs = new Map<BrowserMode, Browser>();
+
+export const getBrowser = async (options?: { headless?: boolean }): Promise<Browser> => {
+  const headless = options?.headless ?? true;
+  const mode: BrowserMode = headless ? "headless" : "headed";
+  const existing = browserRefs.get(mode);
+
+  if (existing) {
+    return existing;
   }
 
-  return browserRef;
+  const browser = await chromium.launch({ headless });
+  browserRefs.set(mode, browser);
+  return browser;
 };
 
 export const closeBrowser = async (): Promise<void> => {
-  if (browserRef) {
-    await browserRef.close();
-    browserRef = null;
+  const closeJobs: Array<Promise<void>> = [];
+
+  for (const browser of browserRefs.values()) {
+    closeJobs.push(browser.close());
   }
+
+  await Promise.allSettled(closeJobs);
+  browserRefs.clear();
 };
