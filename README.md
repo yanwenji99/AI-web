@@ -55,7 +55,9 @@ npm run lint
 ## 已有路由
 
 1. `POST /chat`
-   - 统一聊天调用入口（当前为骨架返回）。
+   - 统一聊天调用入口（已接入 provider-a/provider-b 最小可运行实现，默认 echo 模式）。
+   - 支持 `provider` 字段选择适配器，未传时默认 `provider-a`。
+   - 成功和失败都返回统一结构：`provider`、`model`、`text`、`error_code`。
 
 2. `GET /models`
    - 查询可用 Provider 与模型列表。
@@ -87,3 +89,29 @@ npm run lint
 
 1. 本项目为本地工具，不是官方 API。
 2. 使用时请遵守目标平台服务条款。
+
+## 上层联调（默认 echo）
+
+1. 启动服务
+
+```bash
+npm run dev
+```
+
+2. 用 PowerShell 脚本联调
+
+```bash
+npm run chat:ping
+```
+
+可自定义消息：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/test-chat.ps1 -Message "hello from script"
+```
+
+3. 用 TypeScript 客户端联调
+
+```bash
+npm run chat:client -- "hello from ts client"
+```
